@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
-import { Activity, ShieldCheck, Zap, Server } from 'lucide-react';
+import { Activity, ShieldCheck, Zap, Server, Terminal, Wifi } from 'lucide-react';
 
 interface Card3DProps {
   delay?: number;
@@ -10,11 +10,43 @@ export default function Card3D({ delay = 0, type = 'network' }: Card3DProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
   const [isVisible, setIsVisible] = useState(false);
+  const [logs, setLogs] = useState<string[]>([]);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), delay);
     return () => clearTimeout(timer);
   }, [delay]);
+
+  // Simulate live logs
+  useEffect(() => {
+    if (!isVisible) return;
+    
+    const networkLogs = [
+      "New block propagated: 0x9a...f2",
+      "Peer connected: 192.168.1.104",
+      "Syncing state... 99.9%",
+      "Tx confirmed: 12ms latency",
+      "Mempool size: 420 transactions"
+    ];
+
+    const securityLogs = [
+      "Handshake verified: Kyber-1024",
+      "Intrusion attempt blocked: IP 84.22...",
+      "Key rotation scheduled: T-20min",
+      "Integrity check passed: SHA-3",
+      "Zero-knowledge proof validated"
+    ];
+
+    const sourceLogs = type === 'network' ? networkLogs : securityLogs;
+
+    const interval = setInterval(() => {
+      const randomLog = sourceLogs[Math.floor(Math.random() * sourceLogs.length)];
+      const timestamp = new Date().toLocaleTimeString('en-US', { hour12: false });
+      setLogs(prev => [`[${timestamp}] ${randomLog}`, ...prev].slice(0, 6));
+    }, 1500);
+
+    return () => clearInterval(interval);
+  }, [isVisible, type]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
@@ -44,7 +76,7 @@ export default function Card3D({ delay = 0, type = 'network' }: Card3DProps) {
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className={`relative w-full max-w-md h-[450px] bg-[#1A1A1A] rounded-3xl p-10 overflow-hidden cursor-pointer transition-all duration-700 ${
+      className={`relative w-full max-w-md h-[500px] bg-[#1A1A1A] rounded-3xl p-8 overflow-hidden cursor-pointer transition-all duration-700 group ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
       }`}
       style={{
@@ -59,64 +91,67 @@ export default function Card3D({ delay = 0, type = 'network' }: Card3DProps) {
       }}
     >
       <div
-        className="relative z-10 transition-transform duration-300 h-full flex flex-col justify-between"
+        className="relative z-10 transition-transform duration-300 h-full flex flex-col"
         style={{ transform: `translateZ(${rotation.x !== 0 || rotation.y !== 0 ? '20px' : '0'})` }}
       >
-        <div>
-          <div className="flex items-center gap-3 mb-6">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-8 border-b border-white/10 pb-4">
+          <div className="flex items-center gap-3">
             <div className={`p-2 rounded-lg bg-[${primaryColor}]/10 border border-[${primaryColor}]/30`}>
-              {isNetwork ? <Activity color={primaryColor} /> : <ShieldCheck color={primaryColor} />}
+              {isNetwork ? <Activity color={primaryColor} size={20} /> : <ShieldCheck color={primaryColor} size={20} />}
             </div>
-            <p className="text-sm text-gray-400 font-mono tracking-wider">
-              {isNetwork ? 'LIVE_METRICS' : 'SYSTEM_STATUS'}
-            </p>
-          </div>
-          
-          <h2
-            className={`text-4xl font-serif font-bold text-[${primaryColor}] mb-2`}
-            style={{ color: primaryColor }}
-          >
-            {isNetwork ? 'Mainnet' : 'Secure'}
-          </h2>
-          <div className="flex items-center gap-2 mb-8">
-            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-            <span className="text-gray-300 font-mono text-sm">OPERATIONAL</span>
-          </div>
-
-          <div className="space-y-4">
-            <div className="bg-black/30 p-4 rounded-xl border border-white/5 backdrop-blur-sm">
-              <div className="flex justify-between items-center mb-1">
-                <span className="text-gray-500 text-xs font-mono">{isNetwork ? 'TPS' : 'THREATS BLOCKED'}</span>
-                <Zap className="w-3 h-3 text-yellow-500" />
-              </div>
-              <div className="text-2xl font-bold text-white font-mono">
-                {isNetwork ? '52,941' : '0'}
-              </div>
+            <div>
+              <p className="text-xs text-gray-400 font-mono tracking-wider">SYSTEM_MONITOR</p>
+              <h2 className={`text-xl font-bold text-[${primaryColor}]`} style={{ color: primaryColor }}>
+                {isNetwork ? 'Network Node' : 'Sentinel Guard'}
+              </h2>
             </div>
+          </div>
+          <div className="flex items-center gap-2 px-3 py-1 bg-green-500/10 rounded-full border border-green-500/20">
+            <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+            <span className="text-green-500 font-mono text-[10px] font-bold">ONLINE</span>
+          </div>
+        </div>
 
-            <div className="bg-black/30 p-4 rounded-xl border border-white/5 backdrop-blur-sm">
-              <div className="flex justify-between items-center mb-1">
-                <span className="text-gray-500 text-xs font-mono">{isNetwork ? 'BLOCK HEIGHT' : 'ENCRYPTION'}</span>
-                <Server className="w-3 h-3 text-purple-500" />
-              </div>
-              <div className="text-xl font-bold text-white font-mono">
-                {isNetwork ? '#14,203,112' : 'LATTICE-KYBER'}
-              </div>
+        {/* Stats Grid */}
+        <div className="grid grid-cols-2 gap-4 mb-6">
+          <div className="bg-black/40 p-3 rounded-xl border border-white/5 backdrop-blur-sm group-hover:border-white/10 transition-colors">
+            <div className="flex justify-between items-center mb-1">
+              <span className="text-gray-500 text-[10px] font-mono">{isNetwork ? 'LATENCY' : 'THREAT LEVEL'}</span>
+              <Wifi className="w-3 h-3 text-gray-600" />
+            </div>
+            <div className="text-lg font-bold text-white font-mono">
+              {isNetwork ? '12ms' : 'LOW'}
+            </div>
+          </div>
+          <div className="bg-black/40 p-3 rounded-xl border border-white/5 backdrop-blur-sm group-hover:border-white/10 transition-colors">
+            <div className="flex justify-between items-center mb-1">
+              <span className="text-gray-500 text-[10px] font-mono">{isNetwork ? 'PEERS' : 'ENCRYPTION'}</span>
+              <Server className="w-3 h-3 text-gray-600" />
+            </div>
+            <div className="text-lg font-bold text-white font-mono">
+              {isNetwork ? '842' : 'AES-256'}
             </div>
           </div>
         </div>
 
-        <div className="mt-auto">
-           <div className="w-full h-1 bg-gray-800 rounded-full overflow-hidden">
-             <div 
-               className="h-full bg-gradient-to-r from-transparent to-white/50 animate-progress"
-               style={{ width: '60%', backgroundColor: primaryColor }}
-             />
-           </div>
-           <div className="flex justify-between mt-2 text-[10px] text-gray-500 font-mono">
-             <span>LOAD</span>
-             <span>{isNetwork ? '42%' : '99.9%'}</span>
-           </div>
+        {/* Terminal/Logs Area */}
+        <div className="flex-1 bg-black/60 rounded-xl border border-white/5 p-4 font-mono text-[10px] overflow-hidden relative group-hover:border-[${primaryColor}]/30 transition-colors" style={{ borderColor: rotation.x !== 0 ? `${primaryColor}40` : '' }}>
+          <div className="absolute top-0 left-0 right-0 h-6 bg-gradient-to-b from-[${primaryColor}]/5 to-transparent pointer-events-none" />
+          <div className="flex items-center gap-2 mb-3 text-gray-500 border-b border-white/5 pb-2">
+             <Terminal size={10} />
+             <span>/var/log/{isNetwork ? 'net' : 'auth'}.log</span>
+          </div>
+          <div className="space-y-2">
+            {logs.map((log, i) => (
+              <div key={i} className="flex gap-2 animate-in fade-in slide-in-from-left-2 duration-300">
+                <span className="text-gray-600 shrink-0">{log.split(']')[0]}]</span>
+                <span className={i === 0 ? `text-[${primaryColor}] font-bold` : 'text-gray-400'} style={{ color: i === 0 ? primaryColor : '' }}>
+                  {log.split(']')[1]}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
