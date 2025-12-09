@@ -14,7 +14,7 @@ export default function Contact() {
   };
 
   return (
-    <section className="py-24 px-6 bg-gradient-to-b from-[#F8F5EE] to-[#E8E5DE]">
+    <section id="research" className="py-24 px-6 bg-gradient-to-b from-[#F8F5EE] to-[#E8E5DE]">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>

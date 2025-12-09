@@ -11,7 +11,7 @@ export default function About() {
   ];
 
   return (
-    <section className="py-24 px-6 bg-[#1A1A1A] text-[#F8F5EE]">
+    <section id="mission" className="py-24 px-6 bg-[#1A1A1A] text-[#F8F5EE]">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>

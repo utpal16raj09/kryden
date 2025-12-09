@@ -1,6 +1,6 @@
 export default function ValueProp() {
   return (
-    <section className="py-24 px-6 bg-gradient-to-b from-[#F8F5EE] to-[#E8E5DE]">
+    <section id="assurance" className="py-24 px-6 bg-gradient-to-b from-[#F8F5EE] to-[#E8E5DE]">
       <div className="max-w-6xl mx-auto text-center">
         <h2 className="text-5xl md:text-6xl lg:text-7xl font-serif mb-8 leading-tight">
           Don't encrypt, just{' '}

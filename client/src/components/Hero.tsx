@@ -31,8 +31,8 @@ export default function Hero() {
         </div>
 
         <div className="flex flex-col lg:flex-row items-center justify-center gap-8 perspective-1000">
-          <Card3D />
-          <Card3D delay={200} />
+          <Card3D type="network" />
+          <Card3D delay={200} type="security" />
         </div>
       </div>
     </section>

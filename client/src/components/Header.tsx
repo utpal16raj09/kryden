@@ -13,6 +13,13 @@ export default function Header() {
 
   const navItems = ['Protocol', 'Assurance', 'Validation', 'Pricing', 'Mission', 'Research'];
 
+  const handleNavClick = (id: string) => {
+    const element = document.getElementById(id.toLowerCase());
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <header
       className={`fixed w-full top-0 z-50 transition-all duration-300 ${
@@ -29,6 +36,7 @@ export default function Header() {
             {navItems.map((item) => (
               <button
                 key={item}
+                onClick={() => handleNavClick(item)}
                 className="group relative px-4 py-2 bg-[#1A1A1A] text-[#F8F5EE] rounded-xl text-sm font-medium transition-all duration-300 hover:bg-[#1E3F3A] hover:shadow-[0_0_15px_rgba(0,255,255,0.5)] hover:-translate-y-1"
               >
                 {item}

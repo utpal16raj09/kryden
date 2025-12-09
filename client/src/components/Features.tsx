@@ -156,7 +156,7 @@ export default function Features() {
   ];
 
   return (
-    <section className="py-24 px-6 bg-[#1A1A1A] text-[#F8F5EE] rounded-3xl my-12 mx-6 overflow-hidden relative">
+    <section id="protocol" className="py-24 px-6 bg-[#1A1A1A] text-[#F8F5EE] rounded-3xl my-12 mx-6 overflow-hidden relative">
       <div className="absolute top-0 right-0 w-96 h-96 bg-[#00FFFF]/5 rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#FF0099]/5 rounded-full blur-3xl"></div>
 
