@@ -68,15 +68,15 @@ export default function Card3D({ delay = 0, type = 'network' }: Card3DProps) {
   };
 
   const isNetwork = type === 'network';
-  const primaryColor = isNetwork ? '#00FFFF' : '#FF0099';
-  const secondaryColor = isNetwork ? '#FF0099' : '#00FFFF';
+  const primaryColor = isNetwork ? '#10B981' : '#3B82F6';
+  const secondaryColor = isNetwork ? '#3B82F6' : '#10B981';
 
   return (
     <div
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className={`relative w-full max-w-md h-[500px] bg-[#1A1A1A] rounded-3xl p-8 overflow-hidden cursor-pointer transition-all duration-700 group ${
+      className={`relative w-full max-w-md h-[500px] bg-[#0F172A] rounded-3xl p-8 overflow-hidden cursor-pointer transition-all duration-700 group ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
       }`}
       style={{
