@@ -32,8 +32,10 @@ export default function Pricing() {
   ];
 
   return (
-    <section id="pricing" className="py-24 px-6 bg-[#F8FAFC]">
+    <section id="pricing" className="py-24 px-6 bg-[#fcfbf2]">
       <div className="max-w-7xl mx-auto">
+
+        {/* Header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-serif mb-6 leading-tight text-[#0F172A]">
             Protocol Access Tiers
@@ -44,47 +46,74 @@ export default function Pricing() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          {plans.map((plan, index) => (
-            <div 
-              key={index}
-              className={`rounded-3xl p-8 transition-all duration-300 hover:scale-105 ${
-                plan.highlight 
-                  ? 'bg-[#0F172A] text-[#F8FAFC] shadow-2xl border border-[#10B981]/30' 
-                  : 'bg-white text-[#0F172A] border border-gray-200 hover:shadow-xl'
-              }`}
-            >
-              <h3 className={`text-2xl font-bold mb-2 ${plan.highlight ? 'text-[#10B981]' : 'text-[#0F172A]'}`}>
-                {plan.name}
-              </h3>
-              <div className="text-4xl font-serif font-bold mb-4">
-                {plan.price}
+          {plans.map((plan, index) => {
+            const isDev = plan.name === "Developer";
+            const isEnt = plan.name === "Enterprise";
+
+            return (
+              <div
+                key={index}
+                className={`
+                  rounded-3xl p-8 transition-all duration-300 hover:scale-105
+                  ${isDev
+                    ? 'bg-white text-[#0F172A] border border-gray-200 hover:shadow-xl'   // ORIGINAL DEVELOPER
+                    : 'bg-[#677DA6] text-white border border-[#ffffff20] shadow-xl'       // UPDATED ENTERPRISE
+                  }
+                `}
+              >
+
+                {/* Title */}
+                <h3 className="text-2xl font-bold mb-2">
+                  {plan.name}
+                </h3>
+
+                <div className="text-4xl font-serif font-bold mb-4">
+                  {plan.price}
+                </div>
+
+                <p className={`mb-8 ${isDev ? 'text-[#64748B]' : 'text-gray-200'}`}>
+                  {plan.description}
+                </p>
+
+                {/* Features */}
+                <ul className="space-y-4 mb-10">
+                  {plan.features.map((feature, i) => (
+                    <li key={i} className="flex items-center gap-3">
+                      <div
+                        className={`
+                          rounded-full p-1
+                          ${isDev 
+                            ? 'bg-[#0F172A]/10 text-[#0F172A]' 
+                            : 'bg-black/20 text-white'
+                          }
+                        `}
+                      >
+                        <Check className="w-4 h-4" />
+                      </div>
+
+                      <span className={isDev ? 'text-[#0F172A]' : 'text-white'}>
+                        {feature}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* BUTTONS */}
+                <button
+                  className={`
+                    w-full py-4 rounded-xl font-semibold transition-all duration-300
+                    ${isDev
+                      ? 'bg-black text-white hover:bg-[#1A1A1A]'     // DEVELOPER button
+                      : 'bg-white text-black hover:bg-[#1A1A1A] hover:text-white'     // ENTERPRISE button (same style)
+                    }
+                  `}
+                >
+                  {plan.cta}
+                </button>
+
               </div>
-              <p className={`mb-8 ${plan.highlight ? 'text-gray-400' : 'text-[#64748B]'}`}>
-                {plan.description}
-              </p>
-
-              <ul className="space-y-4 mb-10">
-                {plan.features.map((feature, i) => (
-                  <li key={i} className="flex items-center gap-3">
-                    <div className={`rounded-full p-1 ${plan.highlight ? 'bg-[#10B981]/20 text-[#10B981]' : 'bg-[#0F172A]/10 text-[#0F172A]'}`}>
-                      <Check className="w-4 h-4" />
-                    </div>
-                    <span className={plan.highlight ? 'text-gray-300' : 'text-[#0F172A]'}>
-                      {feature}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-
-              <button className={`w-full py-4 rounded-xl font-semibold transition-all duration-300 ${
-                plan.highlight 
-                  ? 'bg-[#10B981] text-[#0F172A] hover:bg-[#3B82F6] hover:text-white hover:shadow-[0_0_20px_rgba(59,130,246,0.6)]' 
-                  : 'bg-[#0F172A] text-white hover:bg-[#1E293B]'
-              }`}>
-                {plan.cta}
-              </button>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

@@ -3,7 +3,7 @@ import Card3D from './Card3D';
 
 export default function Hero() {
   return (
-    <section className="pt-32 pb-24 px-6 bg-[#F8FAFC]">
+    <section className="pt-42 pb-24 px-6 bg-[#f8f5ee]">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif text-center mb-8 leading-tight text-[#0F172A]">
           Quantum-Resistant.{' '}
@@ -20,7 +20,7 @@ export default function Hero() {
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
-          <button className="group flex items-center gap-2 bg-[#10B981] text-[#0F172A] px-8 py-4 rounded-2xl font-semibold transition-all duration-300 hover:bg-[#3B82F6] hover:text-white hover:shadow-[0_0_30px_rgba(59,130,246,0.7)] hover:scale-105">
+          <button className="group flex items-center gap-2 bg-[#3B82F6] opacity-50 text-[#0d0d0d] px-8 py-4 rounded-2xl font-semibold transition-all duration-300 hover:bg-[#3B82F6] hover:text-white hover:shadow-[0_0_30px_rgba(59,130,246,0.7)] hover:scale-105">
             <Key className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" />
             Request Protocol Access
           </button>

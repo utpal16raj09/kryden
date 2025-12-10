@@ -14,7 +14,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="research" className="py-24 px-6 bg-gradient-to-b from-[#F8FAFC] to-[#E2E8F0]">
+    <section id="research" className="py-24 px-6 bg-[#fcfbf2]">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
@@ -27,8 +27,8 @@ export default function Contact() {
 
             <div className="space-y-6">
               <div className="flex items-start gap-4 group">
-                <div className="w-12 h-12 bg-[#10B981] rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(16,185,129,0.6)]">
-                  <Mail className="w-6 h-6 text-[#0F172A]" />
+                <div className="w-12 h-12 bg-[#3B82F6] rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(16,185,129,0.6)]">
+                  <Mail className="w-6 h-6 text-[#ffffff]" />
                 </div>
                 <div>
                   <p className="font-semibold text-[#0F172A] mb-1">Secure Endpoint</p>
@@ -85,7 +85,7 @@ export default function Contact() {
 
               <button
                 type="submit"
-                className="w-full flex items-center justify-center gap-2 bg-[#10B981] text-[#0F172A] px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:bg-[#3B82F6] hover:text-white hover:shadow-[0_0_30px_rgba(59,130,246,0.7)] hover:scale-105"
+                className="w-full flex items-center justify-center gap-2 bg-[#3B82F6] text-[#0F172A] px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:bg-[#3B82F6] hover:text-white hover:shadow-[0_0_30px_rgba(59,130,246,0.7)] hover:scale-105"
               >
                 <Send className="w-5 h-5" />
                 Initiate Transmission

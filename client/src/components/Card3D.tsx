@@ -20,22 +20,23 @@ export default function Card3D({ delay = 0, type = 'network' }: Card3DProps) {
   // Simulate live logs
   useEffect(() => {
     if (!isVisible) return;
-    
+
     const networkLogs = [
-      "New block propagated: 0x9a...f2",
-      "Peer connected: 192.168.1.104",
-      "Syncing state... 99.9%",
-      "Tx confirmed: 12ms latency",
-      "Mempool size: 420 transactions"
+      "Block 0x9af2…e4c1 propagated — 48ms",
+      "Peer up: 192.168.1.104 — RTT 22ms",
+      "State sync: 99.97%",
+      "Tx 0x12ab…7c confirmed — 12ms",
+      "Mempool: 420 tx"
     ];
 
     const securityLogs = [
-      "Handshake verified: Kyber-1024",
-      "Intrusion attempt blocked: IP 84.22...",
-      "Key rotation scheduled: T-20min",
-      "Integrity check passed: SHA-3",
-      "Zero-knowledge proof validated"
+      "Kyber-1024 handshake ok",
+      "Intrusion blocked: 84.22.19.7",
+      "Key rotation in 20min",
+      "Integrity check SHA3-512 ok",
+      "ZKP validated — id zkp_4421"
     ];
+
 
     const sourceLogs = type === 'network' ? networkLogs : securityLogs;
 
@@ -69,20 +70,18 @@ export default function Card3D({ delay = 0, type = 'network' }: Card3DProps) {
 
   const isNetwork = type === 'network';
   const primaryColor = isNetwork ? '#10B981' : '#3B82F6';
-  const secondaryColor = isNetwork ? '#3B82F6' : '#10B981';
+  const secondaryColor = isNetwork ? '#000000ff' : '#10B981';
 
   return (
     <div
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className={`relative w-full max-w-md h-[500px] bg-[#0F172A] rounded-3xl p-8 overflow-hidden cursor-pointer transition-all duration-700 group ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-      }`}
+      className={`relative w-full max-w-md h-[500px] bg-[#1A1A1A] rounded-3xl p-8 overflow-hidden cursor-pointer transition-all duration-700 group mt-12 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+        }`}
       style={{
-        transform: `perspective(1000px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg) translateZ(${
-          rotation.x !== 0 || rotation.y !== 0 ? '40px' : '0'
-        })`,
+        transform: `perspective(1000px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg) translateZ(${rotation.x !== 0 || rotation.y !== 0 ? '40px' : '0'
+          })`,
         boxShadow:
           rotation.x !== 0 || rotation.y !== 0
             ? `0 0 40px ${primaryColor}60, 0 25px 50px rgba(0, 0, 0, 0.8)`
@@ -136,11 +135,11 @@ export default function Card3D({ delay = 0, type = 'network' }: Card3DProps) {
         </div>
 
         {/* Terminal/Logs Area */}
-        <div className="flex-1 bg-black/60 rounded-xl border border-white/5 p-4 font-mono text-[10px] overflow-hidden relative group-hover:border-[${primaryColor}]/30 transition-colors" style={{ borderColor: rotation.x !== 0 ? `${primaryColor}40` : '' }}>
+        <div className="flex-1 bg-[#000000] rounded-xl border border-white/5 p-4 font-mono text-[10px] overflow-hidden relative group-hover:border-[${primaryColor}]/30 transition-colors" style={{ borderColor: rotation.x !== 0 ? `${primaryColor}40` : '' }}>
           <div className="absolute top-0 left-0 right-0 h-6 bg-gradient-to-b from-[${primaryColor}]/5 to-transparent pointer-events-none" />
           <div className="flex items-center gap-2 mb-3 text-gray-500 border-b border-white/5 pb-2">
-             <Terminal size={10} />
-             <span>/var/log/{isNetwork ? 'net' : 'auth'}.log</span>
+            <Terminal size={10} />
+            <span>/var/log/{isNetwork ? 'net' : 'auth'}.log</span>
           </div>
           <div className="space-y-2">
             {logs.map((log, i) => (
